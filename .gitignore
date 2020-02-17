@@ -1,9 +1,0 @@
-*
-
-# But not these files...
-
-!main.py
-!main_2.py
-!polyskel.py
-!euclid.py
-!buffer.py
