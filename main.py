@@ -415,7 +415,7 @@ if __name__ == "__main__":
         for edge in to_totalpath:
             totalpath.add_edge(edge[0], edge[1])
 
-# filter visibility graph throught buffers on euc_rooms
+# filte r visibility graph throught buffers on euc_rooms
 #
 #         global buffers
 #         buffers = []
