@@ -128,18 +128,18 @@ if __name__ == "__main__":
     def main():
 
         # rooms mapping, first is the room contour, others hole in room like objects
-
-
+        #room4 è il corridoio
+        #room4 = [[(3, 5), (4, 5), (4, 4), (8, 4),(8, 2), (4, 2),(4, 1),(6, 1),(6,0),(3,0)]]
+        room4 = [[(3,0),(6,0),(6,1),(4,1),(4,2),(8,2),(8,4),(4,4),(4,5),(3,5)]]
         room1 = [[(6, 0), (8, 0), (8, 2), (6, 2)]]
+
         room2 = [[(8, 4), (8, 5), (7, 5), (7, 4)]]
         room3 = [[(7, 4), (7, 5), (4, 5), (4, 4)]]
-        room4= [[(1,0),(6,0),(6,2),(8,2),(8,4),(4,4),(4,5),
-                 (3,5),(3,2),(1,2)],[(4.1,2),(4.1,3),(4.9,3),(4.9,2)]]
-        room5 = [[(1, 2), (3, 2), (3, 5), (1, 5)],[(1.5,3),(1.5,4.5),(2.5,4.5),(2.5,3)]]
-        room6 = [[(4.1,2),(4.1,3),(4.9,3),(4.9,2)]]
+        room5 = [[(1, 2), (3, 2), (3, 5), (1, 5)]]
+        room6 = [[(4, 1), (6, 1), (6, 2), (4, 2)]]
+        room7 = [[(1, 0), (3, 0), (3, 2), (1, 2)]]
 
-
-        rooms = [room1, room2, room3, room4, room5, room6]
+        rooms = [room4 , room1, room2, room3, room5, room7, room6]
 
         # Execution of tail_angle_function for angle>270
 
@@ -180,12 +180,15 @@ if __name__ == "__main__":
 
 
             # Execution of the straight skeleton on a single room
+            # print(poly)
+            # print(holes)
+            print(polyskel.skeletonize(poly, holes))
             skeletons.append(polyskel.skeletonize(poly, holes))
 
         # print info about skeleton algo
 
-        for res in skeletons:
-            print(res)
+        # for res in skeletons:
+        #     print(res)
 
         # cycle that returns graph from skeletons
         for ind, skeleton in enumerate(skeletons):
@@ -204,9 +207,8 @@ if __name__ == "__main__":
 
         # construction of adjacency matrix to map doors with rooms
 
-        #doors = [(3,0), (2, -1), (6, -1), (5, -4), (7.5, -4), (6, -4)]
-        doors = [(3, 0),(2,-2),(6,-1,),(4.1,-2.5)]
-
+        #doors = [(3, -1), (8, -3)]
+        doors = [(5, -1), (7, -2), (8, -3), (7.5, -4), (5.5, -4), (3, -3), (3, -1)]
         adj_mat = []
         for door in doors:
             p = Point2(door[0], door[1])
@@ -219,7 +221,7 @@ if __name__ == "__main__":
                         door_in_room = True
                 adj_row.append(door_in_room)
             adj_mat.append(adj_row)
-        # print(adj_mat)
+        #print(adj_mat)
 
         # find the shortest edges between the doors and the graph of the rooms\
         # that match the adjacency matrix
@@ -253,7 +255,7 @@ if __name__ == "__main__":
                             entries.append(LineSegment2(con.p2, connected[con].p1))
                             entries.append(LineSegment2(con.p2, connected[con].p2))
                     for i in outies:
-                        # print(i.p1.x,i.p1.y,i.p2.x,i.p2.y)
+                        #print(i.p1.x,i.p1.y,i.p2.x,i.p2.y)
                         if network.has_edge(i.p1, i.p2):
                             network.remove_edge(i.p1, i.p2)
                     for j in entries:
@@ -286,8 +288,7 @@ if __name__ == "__main__":
                 ind += 1
 
         nodes_room = nx.get_node_attributes(totalpath, 'room')
-        print("apprapr")
-        print(nodes_room)
+
 
         #function to insert two line instead one line where is a door
         #to simulate space visibility
